@@ -1,0 +1,12 @@
+version: "3.7"
+services:
+  cocker-db:
+    image: postgres:15.0-alpine
+    container_name: cocker-db
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=example
+      - POSTGRES_DB=cocker
