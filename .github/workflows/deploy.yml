@@ -44,4 +44,3 @@ jobs:
             artifact_url=$(curl -sH "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" "${{ steps.artifact-upload-step.outputs.artifact-url }}")
             echo $artifact_url
             wget $artifact_url
-            mv *.jar ./captain-cocker-backend.jar
