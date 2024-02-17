@@ -5,6 +5,7 @@ import org.jooq.DSLContext;
 import org.serje3.BotBackend.domain.GuildId;
 import org.serje3.BotBackend.domain.Member;
 import org.serje3.BotBackend.domain.UserId;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Repository;
 
 import static com.serje3.generated.jooq.Tables.MEMBERS;
@@ -20,11 +21,11 @@ public class MemberRepository {
                 .fetchOneInto(Member.class);
     }
 
-    public Member get(UserId userId, GuildId guildId) {
+    public Member.Ref get(UserId userId, GuildId guildId) {
         return dsl.selectFrom(MEMBERS)
                 .where(MEMBERS.USER_ID.eq(userId.getValue()),
                         MEMBERS.GUILD_ID.eq(guildId.getValue()))
-                .fetchOneInto(Member.class);
+                .fetchOneInto(Member.Ref.class);
     }
 
     public void update(Member member) {
@@ -35,7 +36,7 @@ public class MemberRepository {
                 .execute();
     }
 
-    public void create(Member member) {
+    public void create(Member member) throws DuplicateKeyException {
         dsl.insertInto(MEMBERS)
                 .set(MEMBERS.USER_ID, member.getUserId().getValue())
                 .set(MEMBERS.GUILD_ID, member.getGuildId().getValue())

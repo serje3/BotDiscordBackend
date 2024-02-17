@@ -1,8 +1,8 @@
 CREATE TABLE members
 (
     id                 SERIAL PRIMARY KEY,
-    user_id            INT          NOT NULL,
-    guild_id           INT          NOT NULL,
+    user_id            BIGINT          NOT NULL,
+    guild_id           BIGINT          NOT NULL,
     effective_username VARCHAR(255) NOT NULL,
     is_admin           BOOLEAN   DEFAULT FALSE,
     join_date          TIMESTAMP DEFAULT CURRENT_TIMESTAMP,

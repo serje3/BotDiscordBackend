@@ -4,6 +4,8 @@
 package com.serje3.generated.jooq;
 
 
+import com.serje3.generated.jooq.tables.EventLog;
+import com.serje3.generated.jooq.tables.Guild;
 import com.serje3.generated.jooq.tables.Members;
 
 import java.util.Arrays;
@@ -29,6 +31,16 @@ public class DefaultSchema extends SchemaImpl {
     public static final DefaultSchema DEFAULT_SCHEMA = new DefaultSchema();
 
     /**
+     * The table <code>event_log</code>.
+     */
+    public final EventLog EVENT_LOG = EventLog.EVENT_LOG;
+
+    /**
+     * The table <code>guild</code>.
+     */
+    public final Guild GUILD = Guild.GUILD;
+
+    /**
      * The table <code>members</code>.
      */
     public final Members MEMBERS = Members.MEMBERS;
@@ -49,6 +61,8 @@ public class DefaultSchema extends SchemaImpl {
     @Override
     public final List<Sequence<?>> getSequences() {
         return Arrays.asList(
+            Sequences.EVENT_LOG_ID_SEQ,
+            Sequences.GUILD_ID_SEQ,
             Sequences.MEMBERS_ID_SEQ
         );
     }
@@ -56,6 +70,8 @@ public class DefaultSchema extends SchemaImpl {
     @Override
     public final List<Table<?>> getTables() {
         return Arrays.asList(
+            EventLog.EVENT_LOG,
+            Guild.GUILD,
             Members.MEMBERS
         );
     }

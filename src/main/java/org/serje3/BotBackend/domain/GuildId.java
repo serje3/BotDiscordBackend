@@ -6,14 +6,14 @@ import lombok.Value;
 @Value
 @EqualsAndHashCode(of = "value")
 public class GuildId {
-    int value;
+    Long value;
 
-    public GuildId(int value) {
+    public GuildId(Long value) {
         this.value = value;
     }
 
     public GuildId(String value) {
-        this(Integer.parseInt(value));
+        this(Long.parseLong(value));
     }
 
     @Override

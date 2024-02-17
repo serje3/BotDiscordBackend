@@ -6,14 +6,14 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @RequiredArgsConstructor
 public class UserId {
-    int value;
+    Long value;
 
-    public UserId(int value) {
+    public UserId(Long value) {
         this.value = value;
     }
 
     public UserId(String value) {
-        this(Integer.parseInt(value));
+        this(Long.parseLong(value));
     }
 
     @Override

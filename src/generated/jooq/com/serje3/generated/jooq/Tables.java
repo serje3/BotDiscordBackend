@@ -4,6 +4,8 @@
 package com.serje3.generated.jooq;
 
 
+import com.serje3.generated.jooq.tables.EventLog;
+import com.serje3.generated.jooq.tables.Guild;
 import com.serje3.generated.jooq.tables.Members;
 
 
@@ -12,6 +14,16 @@ import com.serje3.generated.jooq.tables.Members;
  */
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Tables {
+
+    /**
+     * The table <code>event_log</code>.
+     */
+    public static final EventLog EVENT_LOG = EventLog.EVENT_LOG;
+
+    /**
+     * The table <code>guild</code>.
+     */
+    public static final Guild GUILD = Guild.GUILD;
 
     /**
      * The table <code>members</code>.
