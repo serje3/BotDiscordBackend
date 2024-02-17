@@ -18,7 +18,7 @@ jobs:
         uses: actions/setup-java@v4
         with:
           java-version: '17' # или любая другая версия Java, необходимая для вашего приложения
-          distribution: 'openjdk'
+          distribution: 'oracle'
           cache: 'gradle'
 
       - name: Build with Gradle
