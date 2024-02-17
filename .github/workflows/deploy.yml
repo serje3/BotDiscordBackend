@@ -41,6 +41,7 @@ jobs:
           script: |
             cd ${{ secrets.APPLICATION_PATH }}
             rm -f *.jar # Удаление всех JAR-файлов из директории
-            artifact_url=$(curl -sH "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" "${{ steps.artifact-upload-step.outputs.artifact-url }}" | jq -r '.artifacts[0].archive_download_url')
+            artifact_url=$(curl -sH "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" "${{ steps.artifact-upload-step.outputs.artifact-url }}")
+            echo $artifact_url
             wget $artifact_url
             mv *.jar ./captain-cocker-backend.jar
