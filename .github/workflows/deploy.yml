@@ -43,5 +43,6 @@ jobs:
             rm -f *.jar # Удаление всех JAR-файлов из директории
             artifact_url=$(curl -L -s -o /dev/null -w "%{url_effective}" -H "Authorization: Bearer ${{ secrets.USER_TOKEN }}" -H "Accept: application/vnd.github+json" -H "X-GitHub-Api-Version: 2022-11-28" "https://api.github.com/repos/${{ github.repository }}/actions/artifacts/${{ steps.artifact-upload-step.outputs.artifact-id }}/zip")
             wget $artifact_url -O app.zip
+            systemctl stop captain-cocker-backend
             unzip app.zip
-            jar -cvf captain-cocker-backend.jar *.jar
+            systemctl start captain-cocker-backend

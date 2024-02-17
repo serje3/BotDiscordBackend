@@ -89,6 +89,7 @@ test {
 }
 
 jar {
+    archiveFileName.set('captain-cocker-backend.jar')
     manifest {
         attributes 'Main-Class':'org.serje3.BotBackend.JavaDiscordBotBackendApplication'
     }
