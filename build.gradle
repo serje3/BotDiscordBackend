@@ -87,3 +87,9 @@ jooq {
 test {
     useJUnitPlatform()
 }
+
+jar {
+    manifest {
+        attributes 'Main-Class':'org.serje3.BotBackend.JavaDiscordBotBackendApplication'
+    }
+}
