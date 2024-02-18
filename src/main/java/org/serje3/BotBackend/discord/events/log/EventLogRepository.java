@@ -3,6 +3,8 @@ package org.serje3.BotBackend.discord.events.log;
 import lombok.RequiredArgsConstructor;
 import org.jooq.DSLContext;
 import org.jooq.Field;
+import org.jooq.Record2;
+import org.jooq.SelectSeekStep1;
 import org.serje3.BotBackend.domain.EventLog;
 import org.serje3.BotBackend.domain.EventLogType;
 import org.serje3.BotBackend.domain.Guild;
@@ -51,15 +53,23 @@ public class EventLogRepository {
 
     public List<EventLog.RatingRef> getRatingOnSenders(EventLogType type) {
         Field<Integer> senderCount = count().as("sender_count");
-        return dsl.select(
-                        rowNumber().over().as("rank"),
+        Field<Integer> rank = rowNumber().over().as("rank");
+
+        SelectSeekStep1<Record2<Long, Integer>, Integer> ratingWithoutRank = dsl
+                .select(
                         EVENT_LOG.SENDER_ID,
-                        senderCount
-                )
+                        senderCount)
                 .from(EVENT_LOG)
                 .where(EVENT_LOG.TYPE.eq(type.name()))
                 .groupBy(EVENT_LOG.SENDER_ID)
-                .orderBy(senderCount.asc())
+                .orderBy(count().desc());
+
+        return dsl.select(
+                        rank,
+                        ratingWithoutRank.field("sender_id"),
+                        ratingWithoutRank.field("sender_count"))
+                .from(ratingWithoutRank)
+                .orderBy(rank.asc())
                 .fetchInto(EventLog.RatingRef.class);
     }
 }
