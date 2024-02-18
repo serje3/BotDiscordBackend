@@ -35,7 +35,7 @@ public class MemberService {
         List<EventLog.RatingRef> ratingOnSenders = eventLogRepository.getRatingOnSenders(EventLogType.SLASH);
         EventLog.RatingRef ratingSender = ratingOnSenders.stream().filter(ref -> ref.getSenderId().equals(userId.getValue()))
                 .findFirst()
-                .orElse(new EventLog.RatingRef(1, userId.getValue(), 0));
+                .orElse(new EventLog.RatingRef(0, userId.getValue(), 0));
 
         return MemberInfo.builder()
                 .countExecutedCommands(userSlashLogs != null ? userSlashLogs.size() : 0)

@@ -59,7 +59,7 @@ public class EventLogRepository {
                 .from(EVENT_LOG)
                 .where(EVENT_LOG.TYPE.eq(type.name()))
                 .groupBy(EVENT_LOG.SENDER_ID)
-                .orderBy(senderCount.desc())
+                .orderBy(senderCount.asc())
                 .fetchInto(EventLog.RatingRef.class);
     }
 }
