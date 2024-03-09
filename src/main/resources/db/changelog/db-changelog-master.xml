@@ -6,4 +6,5 @@
     <include file="sql/02_create_discord_guild_table.sql" relativeToChangelogFile="true"/>
     <include file="sql/03_create_event_log.sql" relativeToChangelogFile="true"/>
     <include file="sql/04_create_youtube_search_cache.sql" relativeToChangelogFile="true"/>
+    <include file="sql/05_create_lavalink_node.sql" relativeToChangelogFile="true"/>
 </databaseChangeLog>

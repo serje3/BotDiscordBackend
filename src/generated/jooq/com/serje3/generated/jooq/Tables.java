@@ -6,6 +6,7 @@ package com.serje3.generated.jooq;
 
 import com.serje3.generated.jooq.tables.EventLog;
 import com.serje3.generated.jooq.tables.Guild;
+import com.serje3.generated.jooq.tables.LavalinkNode;
 import com.serje3.generated.jooq.tables.Members;
 import com.serje3.generated.jooq.tables.YoutubeSearchQueryCache;
 import com.serje3.generated.jooq.tables.YoutubeSearchResponseCache;
@@ -26,6 +27,11 @@ public class Tables {
      * The table <code>guild</code>.
      */
     public static final Guild GUILD = Guild.GUILD;
+
+    /**
+     * The table <code>lavalink_node</code>.
+     */
+    public static final LavalinkNode LAVALINK_NODE = LavalinkNode.LAVALINK_NODE;
 
     /**
      * The table <code>members</code>.

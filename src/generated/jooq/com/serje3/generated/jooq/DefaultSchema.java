@@ -6,6 +6,7 @@ package com.serje3.generated.jooq;
 
 import com.serje3.generated.jooq.tables.EventLog;
 import com.serje3.generated.jooq.tables.Guild;
+import com.serje3.generated.jooq.tables.LavalinkNode;
 import com.serje3.generated.jooq.tables.Members;
 import com.serje3.generated.jooq.tables.YoutubeSearchQueryCache;
 import com.serje3.generated.jooq.tables.YoutubeSearchResponseCache;
@@ -43,6 +44,11 @@ public class DefaultSchema extends SchemaImpl {
     public final Guild GUILD = Guild.GUILD;
 
     /**
+     * The table <code>lavalink_node</code>.
+     */
+    public final LavalinkNode LAVALINK_NODE = LavalinkNode.LAVALINK_NODE;
+
+    /**
      * The table <code>members</code>.
      */
     public final Members MEMBERS = Members.MEMBERS;
@@ -75,6 +81,7 @@ public class DefaultSchema extends SchemaImpl {
         return Arrays.asList(
             Sequences.EVENT_LOG_ID_SEQ,
             Sequences.GUILD_ID_SEQ,
+            Sequences.LAVALINK_NODE_ID_SEQ,
             Sequences.MEMBERS_ID_SEQ,
             Sequences.YOUTUBE_SEARCH_QUERY_CACHE_ID_SEQ,
             Sequences.YOUTUBE_SEARCH_RESPONSE_CACHE_ID_SEQ
@@ -86,6 +93,7 @@ public class DefaultSchema extends SchemaImpl {
         return Arrays.asList(
             EventLog.EVENT_LOG,
             Guild.GUILD,
+            LavalinkNode.LAVALINK_NODE,
             Members.MEMBERS,
             YoutubeSearchQueryCache.YOUTUBE_SEARCH_QUERY_CACHE,
             YoutubeSearchResponseCache.YOUTUBE_SEARCH_RESPONSE_CACHE
