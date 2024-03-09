@@ -40,7 +40,7 @@ public class YoutubeService {
         response = youTube.search().list(List.of("id", "snippet"))
                 .setQ(q)
                 .setType(List.of("video"))
-                .setMaxResults(50L)
+                .setMaxResults(25L)
                 .execute();
         return response;
     }
