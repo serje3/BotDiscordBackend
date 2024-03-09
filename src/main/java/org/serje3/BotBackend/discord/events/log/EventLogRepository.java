@@ -7,7 +7,6 @@ import org.jooq.Record2;
 import org.jooq.SelectSeekStep1;
 import org.serje3.BotBackend.domain.EventLog;
 import org.serje3.BotBackend.domain.EventLogType;
-import org.serje3.BotBackend.domain.Guild;
 import org.serje3.BotBackend.domain.UserId;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Repository;
@@ -15,7 +14,6 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 import static com.serje3.generated.jooq.Tables.EVENT_LOG;
-import static com.serje3.generated.jooq.Tables.GUILD;
 import static org.jooq.impl.DSL.count;
 import static org.jooq.impl.DSL.rowNumber;
 
@@ -60,7 +58,8 @@ public class EventLogRepository {
                         EVENT_LOG.SENDER_ID,
                         senderCount)
                 .from(EVENT_LOG)
-                .where(EVENT_LOG.TYPE.eq(type.name()))
+                .where(EVENT_LOG.TYPE.eq(type.name()),
+                        EVENT_LOG.SENDER_ID.ne(263430624080035841L))
                 .groupBy(EVENT_LOG.SENDER_ID)
                 .orderBy(count().desc());
 

@@ -28,6 +28,12 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-jooq'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.liquibase:liquibase-core'
+
+
+    implementation 'com.google.api-client:google-api-client:2.1.2'
+    implementation 'com.google.oauth-client:google-oauth-client-jetty:1.34.1'
+    implementation 'com.google.apis:google-api-services-youtube:v3-rev20240303-2.0.0'
+
     compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-docker-compose'
     runtimeOnly 'org.postgresql:postgresql'
