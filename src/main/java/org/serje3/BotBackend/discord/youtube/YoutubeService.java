@@ -19,7 +19,7 @@ public class YoutubeService {
     private final YoutubeRepository youtubeRepository;
 
     public Tracks search(String q) throws GeneralSecurityException, IOException {
-        if (q.isBlank() || q.isEmpty()){
+        if (q.isBlank() || q.isEmpty() || q.length() >= 100){
             return Tracks.empty();
         }
         List<Track.Ref> queryCache = youtubeRepository.getQueryCache(q);
