@@ -33,5 +33,14 @@ public class EventLog {
         private final Integer rank;
         private final Long senderId;
         private final Integer count;
+
+        @Override
+        public String toString() {
+            return "RatingRef{" +
+                    "rank=" + rank +
+                    ", senderId=" + senderId +
+                    ", count=" + count +
+                    '}';
+        }
     }
 }

@@ -33,6 +33,8 @@ public class MemberService {
     public MemberInfo getMemberInfo(UserId userId) {
         List<EventLog.Ref> userSlashLogs = eventLogRepository.getBySenderIdAndType(userId, EventLogType.SLASH);
         List<EventLog.RatingRef> ratingOnSenders = eventLogRepository.getRatingOnSenders(EventLogType.SLASH);
+        System.out.println("RATING SENDERS + " + ratingOnSenders);
+        System.out.println("USER ID " + userId.getValue());
         EventLog.RatingRef ratingSender = ratingOnSenders.stream().filter(ref -> ref.getSenderId().equals(userId.getValue()))
                 .findFirst()
                 .orElse(new EventLog.RatingRef(0, userId.getValue(), 0));
