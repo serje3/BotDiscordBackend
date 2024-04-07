@@ -59,7 +59,7 @@ public class EventLogRepository {
                         senderCount)
                 .from(EVENT_LOG)
                 .where(EVENT_LOG.TYPE.eq(type.name()),
-                        EVENT_LOG.SENDER_ID.ne(263430624080035841L))
+                        EVENT_LOG.SENDER_ID.ne(263430624080035841L)) // its me :)
                 .groupBy(EVENT_LOG.SENDER_ID)
                 .orderBy(count().desc());
 
