@@ -76,7 +76,7 @@ public class YoutubeSearchResponseCache extends TableImpl<YoutubeSearchResponseC
     /**
      * The column <code>youtube_search_response_cache.title</code>.
      */
-    public final TableField<YoutubeSearchResponseCacheRecord, String> TITLE = createField(DSL.name("title"), SQLDataType.VARCHAR(100), this, "");
+    public final TableField<YoutubeSearchResponseCacheRecord, String> TITLE = createField(DSL.name("title"), SQLDataType.VARCHAR(150), this, "");
 
     /**
      * The column <code>youtube_search_response_cache.channel_title</code>.

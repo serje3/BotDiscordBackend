@@ -1,0 +1,2 @@
+ALTER TABLE lavalink_node
+    ADD COLUMN enabled BOOLEAN DEFAULT TRUE;

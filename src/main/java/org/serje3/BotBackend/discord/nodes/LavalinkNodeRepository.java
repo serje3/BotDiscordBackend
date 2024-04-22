@@ -17,6 +17,7 @@ public class LavalinkNodeRepository {
 
     public List<LavalinkNode> getNodes() {
         return dsl.selectFrom(LAVALINK_NODE)
+                .where(LAVALINK_NODE.ENABLED)
                 .fetchInto(LavalinkNode.class);
     }
 }
