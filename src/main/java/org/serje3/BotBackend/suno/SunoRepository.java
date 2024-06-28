@@ -28,6 +28,7 @@ public class SunoRepository {
         dsl.update(SUNO_LOGIN)
                 .set(SUNO_LOGIN.COOKIE, auth.cookie())
                 .set(SUNO_LOGIN.SESSION_ID, auth.session())
+                .where(SUNO_LOGIN.USER_ID.eq(auth.userId()))
                 .execute();
     }
 }
