@@ -101,7 +101,7 @@ public class SunoTokenCache {
         sunoRepository.updateAuth(new SunoAuth(auth.userId(), mergedCookies, auth.session()));
     }
 
-    @Scheduled(fixedRate = 60)
+    @Scheduled(fixedRate = 60000)
     public void updateToken() {
         for (Long userId : tokens.keySet()) {
             String token = updateTokenByUserId(userId);
