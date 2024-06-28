@@ -8,6 +8,7 @@ import com.serje3.generated.jooq.tables.EventLog;
 import com.serje3.generated.jooq.tables.Guild;
 import com.serje3.generated.jooq.tables.LavalinkNode;
 import com.serje3.generated.jooq.tables.Members;
+import com.serje3.generated.jooq.tables.SunoLogin;
 import com.serje3.generated.jooq.tables.YoutubeSearchQueryCache;
 import com.serje3.generated.jooq.tables.YoutubeSearchResponseCache;
 
@@ -37,6 +38,11 @@ public class Tables {
      * The table <code>members</code>.
      */
     public static final Members MEMBERS = Members.MEMBERS;
+
+    /**
+     * The table <code>suno_login</code>.
+     */
+    public static final SunoLogin SUNO_LOGIN = SunoLogin.SUNO_LOGIN;
 
     /**
      * The table <code>youtube_search_query_cache</code>.
