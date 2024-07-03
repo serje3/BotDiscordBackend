@@ -7,6 +7,8 @@ import org.serje3.BotBackend.suno.exceptions.FailedRetrieveToken;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @RestController
 @RequestMapping("suno")
 @RequiredArgsConstructor
@@ -30,10 +32,10 @@ public class SunoResource {
         }
     }
 
-    @GetMapping("feed")
-    public ResponseEntity<?> feed(@RequestParam Long userId) {
+    @GetMapping("feed/{userId}")
+    public ResponseEntity<?> feed(@PathVariable Long userId, @RequestParam(required = false) Optional<Integer> page) {
         try {
-            return ResponseEntity.ok(service.feed(userId));
+            return ResponseEntity.ok(service.feed(userId, page));
         } catch (FailedRetrieveToken e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }

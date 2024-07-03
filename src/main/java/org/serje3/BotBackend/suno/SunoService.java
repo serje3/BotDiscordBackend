@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -65,7 +66,7 @@ public class SunoService {
         return resp.getBody();
     }
 
-    public List<SunoClip> feed(Long userId) {
+    public List<SunoClip> feed(Long userId, Optional<Integer> page) {
         String token = getToken(userId);
 
         HttpHeaders headers = new HttpHeaders() {{
@@ -73,12 +74,16 @@ public class SunoService {
         }};
 
         HttpEntity<String> entity = new HttpEntity<>(headers);
-
         String generateUrl = sunoBackendBaseUrl + "feed/";
+
+        if (page.isPresent()) {
+            generateUrl = generateUrl + "?page=" + page.get();
+        }
 
         ResponseEntity<List<SunoClip>> resp = restTemplate.exchange(generateUrl,
                 HttpMethod.GET, entity,
-                new ParameterizedTypeReference<List<SunoClip>>() {});
+                new ParameterizedTypeReference<List<SunoClip>>() {
+                });
 
         return resp.getBody();
     }
