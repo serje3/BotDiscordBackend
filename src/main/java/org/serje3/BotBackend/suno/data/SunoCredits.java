@@ -13,5 +13,5 @@ public class SunoCredits {
     @JsonAlias("monthly_limit")
     private final Integer monthlyLimit;
     @JsonAlias("monthly_usage")
-    private final Integer monthly_usage;
+    private final Integer monthlyUsage;
 }
