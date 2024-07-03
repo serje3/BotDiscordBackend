@@ -40,4 +40,13 @@ public class SunoResource {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+
+    @GetMapping("credits/{userId}")
+    public ResponseEntity<?> credits(@PathVariable Long userId) {
+        try {
+            return ResponseEntity.ok(service.credits(userId));
+        } catch (FailedRetrieveToken e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
 }

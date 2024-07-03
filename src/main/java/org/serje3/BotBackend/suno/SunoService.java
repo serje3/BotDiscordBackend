@@ -1,10 +1,7 @@
 package org.serje3.BotBackend.suno;
 
 import lombok.RequiredArgsConstructor;
-import org.serje3.BotBackend.suno.data.SunoAuth;
-import org.serje3.BotBackend.suno.data.SunoClip;
-import org.serje3.BotBackend.suno.data.SunoGenerateRequest;
-import org.serje3.BotBackend.suno.data.SunoGenerateResponse;
+import org.serje3.BotBackend.suno.data.*;
 import org.serje3.BotBackend.suno.exceptions.FailedRetrieveToken;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
@@ -34,6 +31,59 @@ public class SunoService {
         }
     }
 
+
+    public SunoGenerateResponse generate(Long userId, SunoGenerateRequest request) throws FailedRetrieveToken {
+        HttpHeaders headers = getAuthorizationHeader(userId);
+
+
+        HttpEntity<SunoGenerateRequest> entity = new HttpEntity<>(request, headers);
+
+        String generateUrl = sunoBackendBaseUrl + "generate";
+
+        ResponseEntity<SunoGenerateResponse> resp = restTemplate.exchange(generateUrl, HttpMethod.POST, entity, SunoGenerateResponse.class);
+
+        return resp.getBody();
+    }
+
+    public List<SunoClip> feed(Long userId, Optional<Integer> page) {
+        HttpHeaders headers = getAuthorizationHeader(userId);
+
+
+        HttpEntity<String> entity = new HttpEntity<>(headers);
+        String feedUrl = sunoBackendBaseUrl + "feed/";
+
+        if (page.isPresent()) {
+            feedUrl = feedUrl + "?page=" + page.get();
+        }
+
+        ResponseEntity<List<SunoClip>> resp = restTemplate.exchange(feedUrl,
+                HttpMethod.GET, entity,
+                new ParameterizedTypeReference<List<SunoClip>>() {
+                });
+
+        return resp.getBody();
+    }
+
+    public SunoCredits credits(Long userId) {
+        HttpHeaders headers = getAuthorizationHeader(userId);
+
+        HttpEntity<String> entity = new HttpEntity<>(headers);
+        String creditsUrl = sunoBackendBaseUrl + "get_credits/";
+
+        ResponseEntity<SunoCredits> resp = restTemplate.exchange(creditsUrl,
+                HttpMethod.GET, entity, SunoCredits.class);
+        return resp.getBody();
+    }
+
+    private HttpHeaders getAuthorizationHeader(Long userId) {
+        String token = getToken(userId);
+
+        return new HttpHeaders() {{
+            add("Authorization", "Bearer " + token);
+        }};
+    }
+
+
     private String getToken(Long userId) throws FailedRetrieveToken {
         SunoAuth auth = repository.getAuthByUserId(userId);
         if (auth == null) {
@@ -47,44 +97,5 @@ public class SunoService {
         }
 
         return token;
-    }
-
-
-    public SunoGenerateResponse generate(Long userId, SunoGenerateRequest request) throws FailedRetrieveToken {
-        String token = getToken(userId);
-
-        HttpHeaders headers = new HttpHeaders() {{
-            add("Authorization", "Bearer " + token);
-        }};
-
-        HttpEntity<SunoGenerateRequest> entity = new HttpEntity<>(request, headers);
-
-        String generateUrl = sunoBackendBaseUrl + "generate";
-
-        ResponseEntity<SunoGenerateResponse> resp = restTemplate.exchange(generateUrl, HttpMethod.POST, entity, SunoGenerateResponse.class);
-
-        return resp.getBody();
-    }
-
-    public List<SunoClip> feed(Long userId, Optional<Integer> page) {
-        String token = getToken(userId);
-
-        HttpHeaders headers = new HttpHeaders() {{
-            add("Authorization", "Bearer " + token);
-        }};
-
-        HttpEntity<String> entity = new HttpEntity<>(headers);
-        String generateUrl = sunoBackendBaseUrl + "feed/";
-
-        if (page.isPresent()) {
-            generateUrl = generateUrl + "?page=" + page.get();
-        }
-
-        ResponseEntity<List<SunoClip>> resp = restTemplate.exchange(generateUrl,
-                HttpMethod.GET, entity,
-                new ParameterizedTypeReference<List<SunoClip>>() {
-                });
-
-        return resp.getBody();
     }
 }
