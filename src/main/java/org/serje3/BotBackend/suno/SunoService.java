@@ -29,6 +29,8 @@ public class SunoService {
         } else {
             repository.updateAuth(auth);
         }
+
+        tokenCache.updateTokenByUserId(auth.userId());
     }
 
 

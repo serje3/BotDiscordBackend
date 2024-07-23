@@ -52,11 +52,11 @@ public class SunoTokenCache {
 
 
     public String getTokenByUserId(Long userId) {
-        return tokens.computeIfAbsent(userId, (uId) -> updateTokenByUserId(userId));
+        return tokens.computeIfAbsent(userId, (uId) -> requestTokenByUserId(userId));
     }
 
     @Nullable
-    private String updateTokenByUserId(Long userId) {
+    private String requestTokenByUserId(Long userId) {
         SunoAuth auth = sunoRepository.getAuthByUserId(userId);
         if (auth == null) {
             logger.warn("Skipping token update for {}", userId);
@@ -80,6 +80,7 @@ public class SunoTokenCache {
         } catch (HttpClientErrorException e) {
             // Handle 4xx errors
             logger.error("Client error: {} - {}", e.getStatusCode(), e.getResponseBodyAsString());
+
             return null;
         } catch (HttpServerErrorException e) {
             // Handle 5xx errors
@@ -104,10 +105,14 @@ public class SunoTokenCache {
     @Scheduled(fixedRate = 60000)
     public void updateToken() {
         for (Long userId : tokens.keySet()) {
-            String token = updateTokenByUserId(userId);
-            if (token != null) {
-                tokens.put(userId, token);
-            }
+            updateTokenByUserId(userId);
+        }
+    }
+
+    public void updateTokenByUserId(Long userId) {
+        String token = requestTokenByUserId(userId);
+        if (token != null) {
+            tokens.put(userId, token);
         }
     }
 }
