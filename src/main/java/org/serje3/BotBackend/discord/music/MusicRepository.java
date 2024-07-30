@@ -36,9 +36,11 @@ public class MusicRepository {
                     .execute();
         }
 
+        String trackName = track.getTrackName().length() > 255 ? track.getTrackName().substring(0, 255) : track.getTrackName();
+
         dsl.insertInto(RECENT_TRACKS)
                 .columns(RECENT_TRACKS.NAME, RECENT_TRACKS.GUILD_ID, RECENT_TRACKS.URL)
-                .values(track.getTrackName(), track.getGuildId(), track.getUrl())
+                .values(trackName, track.getGuildId(), track.getUrl())
                 .execute();
     }
 
