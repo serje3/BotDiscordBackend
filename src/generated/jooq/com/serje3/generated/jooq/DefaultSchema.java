@@ -8,6 +8,7 @@ import com.serje3.generated.jooq.tables.EventLog;
 import com.serje3.generated.jooq.tables.Guild;
 import com.serje3.generated.jooq.tables.LavalinkNode;
 import com.serje3.generated.jooq.tables.Members;
+import com.serje3.generated.jooq.tables.RecentTracks;
 import com.serje3.generated.jooq.tables.SunoLogin;
 import com.serje3.generated.jooq.tables.YoutubeSearchQueryCache;
 import com.serje3.generated.jooq.tables.YoutubeSearchResponseCache;
@@ -55,6 +56,11 @@ public class DefaultSchema extends SchemaImpl {
     public final Members MEMBERS = Members.MEMBERS;
 
     /**
+     * The table <code>recent_tracks</code>.
+     */
+    public final RecentTracks RECENT_TRACKS = RecentTracks.RECENT_TRACKS;
+
+    /**
      * The table <code>suno_login</code>.
      */
     public final SunoLogin SUNO_LOGIN = SunoLogin.SUNO_LOGIN;
@@ -89,6 +95,7 @@ public class DefaultSchema extends SchemaImpl {
             Sequences.GUILD_ID_SEQ,
             Sequences.LAVALINK_NODE_ID_SEQ,
             Sequences.MEMBERS_ID_SEQ,
+            Sequences.RECENT_TRACKS_ID_SEQ,
             Sequences.SUNO_LOGIN_USER_ID_SEQ,
             Sequences.YOUTUBE_SEARCH_QUERY_CACHE_ID_SEQ,
             Sequences.YOUTUBE_SEARCH_RESPONSE_CACHE_ID_SEQ
@@ -102,6 +109,7 @@ public class DefaultSchema extends SchemaImpl {
             Guild.GUILD,
             LavalinkNode.LAVALINK_NODE,
             Members.MEMBERS,
+            RecentTracks.RECENT_TRACKS,
             SunoLogin.SUNO_LOGIN,
             YoutubeSearchQueryCache.YOUTUBE_SEARCH_QUERY_CACHE,
             YoutubeSearchResponseCache.YOUTUBE_SEARCH_RESPONSE_CACHE

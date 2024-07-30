@@ -36,6 +36,11 @@ public class Sequences {
     public static final Sequence<Integer> MEMBERS_ID_SEQ = Internal.createSequence("members_id_seq", DefaultSchema.DEFAULT_SCHEMA, SQLDataType.INTEGER.nullable(false), null, null, null, null, false, null);
 
     /**
+     * The sequence <code>recent_tracks_id_seq</code>
+     */
+    public static final Sequence<Long> RECENT_TRACKS_ID_SEQ = Internal.createSequence("recent_tracks_id_seq", DefaultSchema.DEFAULT_SCHEMA, SQLDataType.BIGINT.nullable(false), null, null, null, null, false, null);
+
+    /**
      * The sequence <code>suno_login_user_id_seq</code>
      */
     public static final Sequence<Long> SUNO_LOGIN_USER_ID_SEQ = Internal.createSequence("suno_login_user_id_seq", DefaultSchema.DEFAULT_SCHEMA, SQLDataType.BIGINT.nullable(false), null, null, null, null, false, null);

@@ -8,6 +8,7 @@ import com.serje3.generated.jooq.tables.EventLog;
 import com.serje3.generated.jooq.tables.Guild;
 import com.serje3.generated.jooq.tables.LavalinkNode;
 import com.serje3.generated.jooq.tables.Members;
+import com.serje3.generated.jooq.tables.RecentTracks;
 import com.serje3.generated.jooq.tables.SunoLogin;
 import com.serje3.generated.jooq.tables.YoutubeSearchQueryCache;
 import com.serje3.generated.jooq.tables.YoutubeSearchResponseCache;
@@ -15,6 +16,7 @@ import com.serje3.generated.jooq.tables.records.EventLogRecord;
 import com.serje3.generated.jooq.tables.records.GuildRecord;
 import com.serje3.generated.jooq.tables.records.LavalinkNodeRecord;
 import com.serje3.generated.jooq.tables.records.MembersRecord;
+import com.serje3.generated.jooq.tables.records.RecentTracksRecord;
 import com.serje3.generated.jooq.tables.records.SunoLoginRecord;
 import com.serje3.generated.jooq.tables.records.YoutubeSearchQueryCacheRecord;
 import com.serje3.generated.jooq.tables.records.YoutubeSearchResponseCacheRecord;
@@ -44,6 +46,7 @@ public class Keys {
     public static final UniqueKey<LavalinkNodeRecord> LAVALINK_NODE_URL_KEY = Internal.createUniqueKey(LavalinkNode.LAVALINK_NODE, DSL.name("lavalink_node_url_key"), new TableField[] { LavalinkNode.LAVALINK_NODE.URL }, true);
     public static final UniqueKey<MembersRecord> MEMBERS_PKEY = Internal.createUniqueKey(Members.MEMBERS, DSL.name("members_pkey"), new TableField[] { Members.MEMBERS.ID }, true);
     public static final UniqueKey<MembersRecord> UNIQUE_USER_GUILD_PAIR = Internal.createUniqueKey(Members.MEMBERS, DSL.name("unique_user_guild_pair"), new TableField[] { Members.MEMBERS.USER_ID, Members.MEMBERS.GUILD_ID }, true);
+    public static final UniqueKey<RecentTracksRecord> RECENT_TRACKS_PKEY = Internal.createUniqueKey(RecentTracks.RECENT_TRACKS, DSL.name("recent_tracks_pkey"), new TableField[] { RecentTracks.RECENT_TRACKS.ID }, true);
     public static final UniqueKey<SunoLoginRecord> SUNO_LOGIN_PKEY = Internal.createUniqueKey(SunoLogin.SUNO_LOGIN, DSL.name("suno_login_pkey"), new TableField[] { SunoLogin.SUNO_LOGIN.USER_ID }, true);
     public static final UniqueKey<YoutubeSearchQueryCacheRecord> YOUTUBE_SEARCH_QUERY_CACHE_PKEY = Internal.createUniqueKey(YoutubeSearchQueryCache.YOUTUBE_SEARCH_QUERY_CACHE, DSL.name("youtube_search_query_cache_pkey"), new TableField[] { YoutubeSearchQueryCache.YOUTUBE_SEARCH_QUERY_CACHE.ID }, true);
     public static final UniqueKey<YoutubeSearchResponseCacheRecord> YOUTUBE_SEARCH_RESPONSE_CACHE_PKEY = Internal.createUniqueKey(YoutubeSearchResponseCache.YOUTUBE_SEARCH_RESPONSE_CACHE, DSL.name("youtube_search_response_cache_pkey"), new TableField[] { YoutubeSearchResponseCache.YOUTUBE_SEARCH_RESPONSE_CACHE.ID }, true);
@@ -53,5 +56,6 @@ public class Keys {
     // -------------------------------------------------------------------------
 
     public static final ForeignKey<EventLogRecord, GuildRecord> EVENT_LOG__EVENT_LOG_GUILD_ID_FKEY = Internal.createForeignKey(EventLog.EVENT_LOG, DSL.name("event_log_guild_id_fkey"), new TableField[] { EventLog.EVENT_LOG.GUILD_ID }, Keys.GUILD_GUILD_ID_KEY, new TableField[] { Guild.GUILD.GUILD_ID }, true);
+    public static final ForeignKey<RecentTracksRecord, GuildRecord> RECENT_TRACKS__RECENT_TRACKS_GUILD_ID_FKEY = Internal.createForeignKey(RecentTracks.RECENT_TRACKS, DSL.name("recent_tracks_guild_id_fkey"), new TableField[] { RecentTracks.RECENT_TRACKS.GUILD_ID }, Keys.GUILD_GUILD_ID_KEY, new TableField[] { Guild.GUILD.GUILD_ID }, true);
     public static final ForeignKey<YoutubeSearchResponseCacheRecord, YoutubeSearchQueryCacheRecord> YOUTUBE_SEARCH_RESPONSE_CACHE__YOUTUBE_SEARCH_RESPONSE_CACHE_QUERY_ID_FKEY = Internal.createForeignKey(YoutubeSearchResponseCache.YOUTUBE_SEARCH_RESPONSE_CACHE, DSL.name("youtube_search_response_cache_query_id_fkey"), new TableField[] { YoutubeSearchResponseCache.YOUTUBE_SEARCH_RESPONSE_CACHE.QUERY_ID }, Keys.YOUTUBE_SEARCH_QUERY_CACHE_PKEY, new TableField[] { YoutubeSearchQueryCache.YOUTUBE_SEARCH_QUERY_CACHE.ID }, true);
 }
