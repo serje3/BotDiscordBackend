@@ -30,7 +30,9 @@ public class SunoService {
             repository.updateAuth(auth);
         }
 
-        tokenCache.updateTokenByUserId(auth.userId());
+        if (!tokenCache.updateTokenByUserId(auth.userId())){ // if not success updated
+            throw new FailedRetrieveToken("Failed to authenticate user");
+        }
     }
 
 

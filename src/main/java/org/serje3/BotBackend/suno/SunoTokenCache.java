@@ -3,10 +3,12 @@ package org.serje3.BotBackend.suno;
 
 import lombok.RequiredArgsConstructor;
 import org.serje3.BotBackend.suno.data.SunoAuth;
+import org.serje3.BotBackend.suno.data.SunoClientResponse;
 import org.serje3.BotBackend.suno.data.SunoRetrieveTokenResponse;
 import org.serje3.BotBackend.utils.CookieFormatter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.*;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -23,17 +25,17 @@ import java.net.CookieManager;
 
 
 @Service
-@RequiredArgsConstructor
 public class SunoTokenCache {
     private final ConcurrentHashMap<Long, String> tokens = new ConcurrentHashMap<>();
-    private final RestTemplate restTemplate;
     private final CookieManager cookieManager = new CookieManager();
+    private final RestTemplate restTemplate;
 
     {
         cookieManager.setCookiePolicy(CookiePolicy.ACCEPT_ALL);
     }
 
-    private final String baseUrl = "https://clerk.suno.com/v1/client/sessions/%s/tokens?_clerk_js_version=4.72.0-snapshot.vc141245";
+    private final String baseUrl = "https://clerk.suno.com/v1/client/sessions/%s/tokens?_clerk_js_version=4.73.4";
+    //    private final String baseUrl = "https://clerk.suno.com/v1/client?_clerk_js_version=4.73.4";
     private final HttpHeaders commonHeaders = new HttpHeaders() {
         {
             add("Content-Type", "text/plain;charset=UTF-8");
@@ -46,8 +48,16 @@ public class SunoTokenCache {
     private final SunoRepository sunoRepository;
     private final Logger logger = LoggerFactory.getLogger(SunoTokenCache.class);
 
+    public SunoTokenCache(SunoRepository sunoRepository,
+                          @Qualifier("proxied") RestTemplate restTemplate
+    ) {
+        this.sunoRepository = sunoRepository;
+        this.restTemplate = restTemplate;
+    }
+
     public String getSessionUrl(String sessionId) {
         return String.format(baseUrl, sessionId);
+//        return baseUrl;
     }
 
 
@@ -72,11 +82,22 @@ public class SunoTokenCache {
 
         HttpEntity<String> entity = new HttpEntity<>(headers);
         try {
-            ResponseEntity<SunoRetrieveTokenResponse> resp = restTemplate.exchange(url, HttpMethod.POST, entity, SunoRetrieveTokenResponse.class);
-            handleSetCookie(auth, resp.getHeaders().get("Set-Cookie"));
-            logger.info("Updated token for user {} {}", userId, resp.getBody().jwt());
-
-            return resp.getBody().jwt();
+            ResponseEntity<SunoRetrieveTokenResponse> resp = restTemplate
+                    .exchange(url, HttpMethod.POST, entity, SunoRetrieveTokenResponse.class);
+            if (resp.getStatusCode().is2xxSuccessful()) {
+                handleSetCookie(auth, resp.getHeaders().get("Set-Cookie"));
+                return resp.getBody().jwt();
+//                Optional<SunoClientResponse.Session> session = Objects.requireNonNull(resp.getBody()).getResponse().getSessions().stream().findFirst();
+//                if (session.isPresent()) {
+//                    String jwt = session.get().getLastActiveToken().getJwt();
+//                    logger.info("Updated token for user {} {}", userId, jwt);
+//                    return jwt;
+//                } else {
+//                    logger.warn("No session present for {}", userId);
+//                    logger.info(resp.toString());
+//                }
+            }
+            return null;
         } catch (HttpClientErrorException e) {
             // Handle 4xx errors
             logger.error("Client error: {} - {}", e.getStatusCode(), e.getResponseBodyAsString());
@@ -105,14 +126,22 @@ public class SunoTokenCache {
     @Scheduled(fixedRate = 60000)
     public void updateToken() {
         for (Long userId : tokens.keySet()) {
-            updateTokenByUserId(userId);
+            logger.info("User {} updating", userId);
+            if (!updateTokenByUserId(userId)) {
+                logger.warn("UPDATE NOT SUCCESS, REMOVING userId");
+            }
         }
     }
 
-    public void updateTokenByUserId(Long userId) {
+    public boolean updateTokenByUserId(Long userId) {
         String token = requestTokenByUserId(userId);
         if (token != null) {
             tokens.put(userId, token);
+            return true;
+        } else {
+            sunoRepository.deleteAuth(userId);
+            tokens.remove(userId);
+            return false;
         }
     }
 }

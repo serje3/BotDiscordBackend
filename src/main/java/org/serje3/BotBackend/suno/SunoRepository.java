@@ -31,4 +31,10 @@ public class SunoRepository {
                 .where(SUNO_LOGIN.USER_ID.eq(auth.userId()))
                 .execute();
     }
+
+    public void deleteAuth(Long userId) {
+        dsl.delete(SUNO_LOGIN)
+                .where(SUNO_LOGIN.USER_ID.eq(userId))
+                .execute();
+    }
 }
